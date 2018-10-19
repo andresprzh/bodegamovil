@@ -1,0 +1,73 @@
+
+<div class="navbar-fixed ">
+    <nav class="green darken-2" role="navigation" >
+
+        <div class="nav-wrapper">
+            <ul class="sidenav-trigger"  data-target="desplegable">
+                <li><a href="#"><i class="fas fa-bars"></i></a></li>
+            </ul>
+
+            <a id="logo-container" href="#/inicio" class="brand-logo center">
+                <span>Empacar</span>
+            </a>
+        </div>
+
+        <!-- <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a> -->
+    </nav>
+</div>
+
+
+<!-- ==========================================
+                MENU DESPLEGABLE
+=============================================== -->
+<ul id="desplegable" class="sidenav ">
+        
+        <li>
+
+            <div class="user-view">
+
+                <div class="background green darken-2">
+                </div>
+
+                <a href=""><img class="circle white-text" src="imagenes/usuarios/default/anonymous.png"></a>
+                <a href=""><span class="usuario white-text"></span></a>
+                <a href=""><span class="nombre white-text"></span></a>
+
+            </div>
+
+        </li>
+        <div id='linav'></div>
+        <!-- <li><a href="#/alistar" ><i class="fas fa-clipboard-list"></i>Alistar items</a></li>
+        <li><a href="#/transportador" ><i class="fas fa-truck"></i>Despachos</a></li> -->
+        
+        <li><div class="divider  "></div></li>                
+        <li class="">
+            <a href="#/salir" class="waves-effect "><i class="fas fa-sign-out-alt"></i>Salir</a>
+        </li>
+
+</ul>
+
+<script type="text/javascript"> 
+    var id_usuario=localStorage.id;
+    var perfil=localStorage.perfil;
+    
+    $(document).ready(function(){
+        $('.sidenav').sidenav();
+
+        $('.usuario').html(localStorage.usuario);
+        $('.nombre').html(localStorage.nombre);
+        
+        if (perfil==3) {
+            $('#linav').append(`<li><a href="#/alistar" ><i class="fas fa-clipboard-list"></i>Alistar items</a></li>`);
+        }else if (perfil==6) {
+            $('#linav').append(`<li><a href="#/transportador" ><i class="fas fa-truck"></i>Despachos</a></li>`);
+        }else{
+            $('#linav').append(`<li><a href="#/alistar" ><i class="fas fa-clipboard-list"></i>Alistar items</a></li>`);
+            $('#linav').append(`<li><a href="#/transportador" ><i class="fas fa-truck"></i>Despachos</a></li>`);
+        }
+
+        $('a').click(function (e) { 
+            $('.sidenav').sidenav('close');
+        });
+    });
+</script>
