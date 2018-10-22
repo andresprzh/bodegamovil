@@ -21,6 +21,7 @@ var app = {
                 type: 'POST',
                 url: api_url+'usuarios/login',
                 dataType: 'JSON',
+                timeout:5000,
                 data: { 'username': username, 'password': passowrd },
                 success: function (res) {
                     
@@ -40,6 +41,9 @@ var app = {
                         $('#error').removeClass('hide');
                     }
     
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    alert('Error conexion ' + XMLHttpRequest.readyState);
                 }
             });
         });

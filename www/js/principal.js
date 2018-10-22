@@ -18,6 +18,7 @@
  */
 // url del api
 var api_url='http://192.168.1.54/BodegaDrogueria/api/';
+// var api_url='http://192.168.0.11/BodegaDrogueria/api/';
 var app = {
     // Application Constructor
     initialize: function() {
