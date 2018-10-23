@@ -1,34 +1,48 @@
-$(document).ready(function () {
 
+var app = {
+    // Application Constructor
+    initialize: function() {
+        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+    },
 
-    switch (parseInt(usuario["perfil"])) {
+    // deviceready Event Handler
+    //
+    // Bind any cordova events here. Common events are:
+    // 'pause', 'resume', etc.
+    onDeviceReady: function() {
+        
+        switch (parseInt(localStorage.perfil)) {
 
-        // Para Admins
-        case 1:
-            $("#contenido-inicio").append($('<h2 class="header center">Admin</h2>'));
-            tablarequeridos();
-
-            break;
-        // jefe de bodeg
-        case 2:
-            $("#contenido-inicio").append($('<h2 class="header center">Jefe de bodega</h2>'));
-            tablarequeridos();
-            break;
-        case 3:
-            $("#contenido-inicio").append($('<h2 class="header center">Alistador</h2>'));
-            break;
-        case 4:
-            $("#contenido-inicio").append($('<h2 class="header center">Encargado punto de venta</h2>'));
-            break;
-        case 5:
-            $("#contenido-inicio").append($('<h2 class="header center">Jefe delegado</h2>'));
-            tablarequeridos();
-            break;
-        default:
-            break;
+            // Para Admins
+            case 1:
+                $("#contenido-inicio").append($('<h2 class="header center">Admin</h2>'));
+                tablarequeridos();
+    
+                break;
+            // jefe de bodeg
+            case 2:
+                $("#contenido-inicio").append($('<h2 class="header center">Jefe de bodega</h2>'));
+                tablarequeridos();
+                break;
+            case 3:
+                
+                tablaubicaciones();
+                break;
+            case 4:
+                $("#contenido-inicio").append($('<h2 class="header center">Encargado punto de venta</h2>'));
+                break;
+            case 5:
+                $("#contenido-inicio").append($('<h2 class="header center">Jefe delegado</h2>'));
+                tablarequeridos();
+                break;
+            default:
+                break;
+        }
     }
-});
 
+};
+
+app.initialize();
 
 function tablarequeridos() {
 
@@ -37,16 +51,16 @@ function tablarequeridos() {
             </ul>`));
     // pone requisiciones en el input select
     $.ajax({
-        url: "api/alistar/requisiciones",
-        method: "GET",
+        url: api_url+'alistar/requisiciones',
+        method: 'GET',
         data: { 'valor': 3 },
-        dataType: "json",
+        dataType: 'json',
         success: function (res) {
 
             let color = {
-                0: "grey",
-                1: "orange",
-                2: "green"
+                0: 'grey',
+                1: 'orange',
+                2: 'green'
             };
 
             // SE MUESTRAN LAS reqUISICIONES EN EL MENU DE SELECCION  
@@ -79,6 +93,48 @@ function tablarequeridos() {
             // INICIA MENU DE SELECCION
             $('select').formSelect();
 
+        }
+    });
+}
+
+function tablaubicaciones() {
+    var iduser=localStorage.id;
+    // alert(iduser);
+    var lista=(`
+    <ul class="collection with-header" id="listtareas">
+        <li class="collection-header">
+            <h4 class="center-align">Ubicaciones Asignadas</h4>
+        </li>
+        <div id="ubicaciones">
+    `);
+
+    $.ajax({
+        type: 'GET',
+        url: api_url+'tareas/dettarea',
+        data: {'usuario':iduser},
+        dataType: 'JSON',
+        success: function (res) {
+            
+            // refresca ubicaciones
+            
+            if (res) {
+
+                for (var i in res) {
+                    
+                    lista+=(`
+                        <li class="collection-item" id="${i}">
+                            <div>${res[i]}</div>
+                        </li>
+                    `);
+                }
+                
+            }else{
+                
+                lista+=(`<li class="collection-item">No hay ubicaciones asignadas</li>`);
+            }
+            lista+=`</div></ul>`;
+            $('#contenido-inicio').append(lista);
+            // $('#contenido-inicio').html(`);
         }
     });
 }
