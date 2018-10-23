@@ -22,7 +22,7 @@ var app = {
             // jefe de bodeg
             case 2:
                 $("#contenido-inicio").append($('<h2 class="header center">Jefe de bodega</h2>'));
-                tablarequeridos();
+                // tablarequeridos();
                 break;
             case 3:
                 
@@ -33,7 +33,7 @@ var app = {
                 break;
             case 5:
                 $("#contenido-inicio").append($('<h2 class="header center">Jefe delegado</h2>'));
-                tablarequeridos();
+                // tablarequeridos();
                 break;
             default:
                 break;
@@ -54,10 +54,10 @@ function tablarequeridos() {
         url: api_url+'alistar/requisiciones',
         method: 'GET',
         data: { 'valor': 3 },
-        dataType: 'json',
+        dataType: 'JSON',
         success: function (res) {
 
-            let color = {
+            var color = {
                 0: 'grey',
                 1: 'orange',
                 2: 'green'

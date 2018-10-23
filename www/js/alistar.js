@@ -87,7 +87,7 @@ var app = {
             e.preventDefault();
             setTimeout(function() {
                 Keyboard.hide();
-            }, 100);
+            }, 50);
             // alert(Keyboard.isVisible);
         });
     
@@ -304,7 +304,7 @@ var app = {
         
         $('#modalform').on('keydown', 'input', function (e) {
             //previene enviar formulario si se presiona enter
-            // alert(e.which);
+            alert(e.which);
             if (e.which == 9) {
                 
                 agregarItem(); 
@@ -420,7 +420,7 @@ function recargarItems() {
 
             // si la ubicacion en la que se estaba trabajando no tiene items , se cambia a otra ubicacion
             if (!values.includes(ubicacion)) {
-                ubicacion=$('#ubicacion option').eq(1).val();
+                ubicacion=$('#ubicacion option').eq(0).val();
             }
             $('#ubicacion').val(ubicacion);
             cambiarUbicacion();
@@ -548,12 +548,14 @@ function mostrarItems() {
                 // se carga el menu seleccion de ubicaciones
                 var ubicaciones = res['ubicaciones'];
                 $('#ubicacion').html('');
-                $('#ubicacion').append($(`<option value=''  selected>Ubicacion</option>`));
+                
                 for (var i in ubicaciones) {
 
                     $('#ubicacion').append($(`<option value="${ubicaciones[i]}"> ${ubicaciones[i]}</option>`));
 
                 }
+                cambiarUbicacion();
+                // ssdfsdf
                 $('.entradas').removeClass('hide');
 
             } else {
