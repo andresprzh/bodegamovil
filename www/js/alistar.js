@@ -38,13 +38,18 @@ var app = {
             dataType: "JSON",
             success: function (res) {
                 
-                // SE MUESTRAN LAS reqUISICIONES EN EL MENU DE SELECCION
-                for (var i in res) {
-    
-                    $("#requeridos").append($('<option value="' + res[i]['no_req'] + '">' + res[i]['no_req'].substr(4) + res[i]['descripcion'] + '</option>'));
-    
+                if (res) {
+                    // SE MUESTRAN LAS REQUISICIONES EN EL MENU DE SELECCION
+                    for (var i in res) {
+        
+                        $("#requeridos").append($('<option value="' + res[i]['no_req'] + '">' + res[i]['no_req'].substr(4) + res[i]['descripcion'] + '</option>'));
+        
+                    }
+                    if (i==0) {
+                        $("#requeridos").val(res[i]['no_req']);
+                        cambiarRequeridos();
+                    }
                 }
-    
             }
         });
     
@@ -53,17 +58,17 @@ var app = {
         // ============================================================================================================================*/
     
         //EVENTO AL CAMBIAR ENTRADA REQUERIDOS
-        $(".requeridos").change(function (e) {
+        // $(".requeridos").change(function (e) {
             
-            $.when(mostrarItems()).done(function () {
+        //     $.when(mostrarItems()).done(function () {
     
-                $.when(mostrarCaja()).done(function () {
-                    $("#codbarras").focus();
+        //         $.when(mostrarCaja()).done(function () {
+        //             $("#codbarras").focus();
                     
-                });
-            });
+        //         });
+        //     });
     
-        });
+        // });
     
         // FUNCION QUE FILTRA ITEMS POR UBICACION
         $("#ubicacion").change(function (e) {
@@ -322,6 +327,23 @@ app.initialize();
 /* ============================================================================================================================
                                                 FUNCIONES   
 ============================================================================================================================*/
+
+// funcion que se ejecuta al cambiar requeridos
+function cambiarRequeridos() {
+    $.when(mostrarItems()).done(function () {
+        $.when(mostrarCaja()).done(function () {
+            $("#codbarras").focus();
+            // obtiene las ubicaciones al recargar tabla
+            var options = $('#ubicacion option');
+            
+            var values = $.map(options ,function(option) {
+                return option.value;
+            });
+            $('#ubicacion').val(values[1]);
+            cambiarUbicacion();
+        });
+    });
+}
 
 // FUNCION QUE BUSCA EL CODIGO DE BARRAS
 function buscarCodbar() {
