@@ -6,12 +6,12 @@
     <br>
     <div class="row">
         <div class="col s9 m9 l9">
-            <select   list="requeridos" name="requeridos" class="requeridos browser-default col s12 " id="requeridos" onchange="cambiarRequeridos()">
+            <select   list="requeridos" name="requeridos" class="requeridos browser-default col s12 " id="requeridos" onchange="this.cambiarRequeridos">
                 <option value="" disabled selected>Número requisicion</option>
             </select>
         </div>
         <div class="col s3 m3 l3">
-            <button id="refresh" title="Recargar" onclick="recargarItems()" class="btn waves-effect waves-light green darken-3 " >
+            <button id="refresh" title="Recargar" onclick="this.recargarItems" class="btn waves-effect waves-light green darken-3 " >
                 <i class="fas fa-sync"></i>
             </button>
         </div>     
