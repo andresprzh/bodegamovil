@@ -309,7 +309,9 @@ var app = {
         
         $('#modalform').on('keydown', 'input', function (e) {
             //previene enviar formulario si se presiona enter
-            alert(e.which);
+            // alert(e.which);
+            $('.validacion-input').css('display', 'none');
+            $('#cantidad').css('border-bottom', '1px solid gray');
             if (e.which == 9) {
                 
                 agregarItem(); 
@@ -339,7 +341,7 @@ function cambiarRequeridos() {
             var values = $.map(options ,function(option) {
                 return option.value;
             });
-            $('#ubicacion').val(values[1]);
+            $('#ubicacion').val(values[0]);
             cambiarUbicacion();
         });
     });
@@ -452,7 +454,7 @@ function recargarItems() {
 
 // FUNCION QUE AGREGA ITEM A LA TABLA EDITABLE
 function agregarItem() {
-    $('.modal').modal('close')
+    
     var value = $("#cantidad").val();
     $("#cantidad").val('');
     //consigue el numero de requerido
@@ -467,8 +469,18 @@ function agregarItem() {
     }
 
     // alista el item si se presiona en alistar o se da en enter
-    if (value != null) {
+    if ((value.toString().length>=13 && value.toString()!='65743328329379842953') || value<0 ) {
         
+        // $('.validacion-input').removeClass('hide');
+        $('.validacion-input').css('display', 'flex');
+        $('#cantidad').css('border-bottom', '1px solid red');
+    }
+    else {
+        $('.modal').modal('close')
+        $('#cantidad').css('border-bottom', '1px solid gray');
+        // $('.validacion-input').addClass('hide');
+
+        $('.validacion-input').css('display', 'none');
         // consigue el valor maximo en decenas que puede valer la cantidad de alistados
         // EJ: entre 0 y 10 maximo valor=100, entre 11 y 100 maximo valor 1000
         var a = 0;
@@ -479,7 +491,7 @@ function agregarItem() {
         } while (pot > 1);
         var maxvalue = Math.pow(10, a);
 
-        if (value === '') {
+        if (value === '' || value.toString().length==20  || value==0) {
             value = item['pendientes'];
         }
         ;

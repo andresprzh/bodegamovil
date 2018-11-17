@@ -180,7 +180,7 @@
 
             <input  id="cantidad" type="number" class="validate">
             <label for="cantidad" >Cantidad a alistar</label>
-
+            <span class="validacion-input" style="display:none;"><i class="fas fa-exclamation-circle"></i>Digite una cantidad valida</span>
         </div> 
         <div class="col s2 m3 l3">
             <button id="modalcan" title="Cancelar" class="btn waves-effect waves-light grey  " >
@@ -207,6 +207,9 @@
     .modal{
         width:100%;
         font-size: 150%;
+    }
+    .validacion-input{
+        color: #aa1010;
     }
     .tabla  td:first-child, .tabla  th:first-child{
         width:40%;
