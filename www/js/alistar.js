@@ -61,20 +61,6 @@ var app = {
     //                                                     EVENTOS   
     // ============================================================================================================================*/
     receivedEvent: function(id){
-        
-        // EVENTO AL CAMBIAR ENTRADA REQUERIDOS
-        $(".requeridos").change(function (e) {
-            
-            
-            $.when(app.mostrarItems()).done(function () {
-    
-                $.when(app.mostrarCaja()).done(function () {
-                    $("#codbarras").focus();
-                    
-                });
-            });
-    
-        });
 
         // FUNCION QUE FILTRA ITEMS POR UBICACION
         $("#ubicacion").change(function (e) {

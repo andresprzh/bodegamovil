@@ -10,12 +10,17 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function() {
+        $('.modal').modal();
+
         $('#login').submit(function (e) {
             e.preventDefault();
             const username = $('#usuario').val();
             const passowrd = $('#password').val();
     
-            
+            $('#usuario').prop("disabled", true)
+            $('#password').prop("disabled", true)
+            $('#login button').prop("disabled", true)
+
             // return 0;
             $.ajax({
                 type: 'POST',
@@ -25,6 +30,9 @@ var app = {
                 data: { 'username': username, 'password': passowrd },
                 success: function (res) {
                     
+                    $('#usuario').prop("disabled", false)
+                    $('#password').prop("disabled", false)
+                    $('#login button').prop("disabled", false)
                     if (res) {
                         localStorage.session=1;
     
@@ -43,11 +51,22 @@ var app = {
     
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
+                    $('#usuario').prop("disabled", false)
+                    $('#password').prop("disabled", false)
+                    $('#login button').prop("disabled", false)
                     alert('Error conexion ' + XMLHttpRequest.readyState);
                 }
             });
         });
         
+        $('#settings').click(function (e) { 
+            e.preventDefault();
+            $('#editaritem').html('');
+            $.get('modulos/settings.html', function(data){
+                $('#editaritem').append(data);
+            });
+            $('.modal').modal('open');
+        });
     },
 
 };

@@ -17,24 +17,29 @@
  * under the License.
  */
 // url del api
-// var api_url='http://192.168.1.54/BodegaDrogueria/api/';
-var api_url='http://192.168.0.15/BodegaDrogueria/api/';
+if (!localStorage.api_url) {
+    // var api_url='http://192.168.1.54/BodegaDrogueria/api/';
+    var api_url='http://192.168.0.15/BodegaDrogueria/api/';
+}else{
+    var api_url=localStorage.api_url;
+}
 var app = {
     // Application Constructor
     initialize: function() {
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
-    // deviceready Event Handler
-    //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
+    
     onDeviceReady: function() {
-        // this.receivedEvent('deviceready');
+    
         // Keyboard.shrinkView(true);
         // INICIA MENU DE SELECCION
         $('select').formSelect();
-    
+        this.receivedEvent('deviceready');
+        
+    },
+    receivedEvent: function(id){
+
         if (localStorage.session==1) {
     
             
@@ -44,15 +49,21 @@ var app = {
             // $('#nav').load('modulos/navbar.html');
     
             ;(function($) {
-                var app = $.sammy(function() {
+                var sammyapp = $.sammy(function() {
             
                     this.get('#/salir', function() {
                     
-                    // localStorage.session=0;
-                    localStorage.clear();
-                    // location.reload();
-                    window.location = '#/';
-                    location.reload();
+                        // localStorage.session=0;
+                        localStorage.removeItem("session")
+                        localStorage.removeItem("id")
+                        localStorage.removeItem("usuario")
+                        localStorage.removeItem("nombre")
+                        localStorage.removeItem("perfil")
+
+                        // localStorage.clear();
+                        // location.reload();
+                        window.location = '#/';
+                        location.reload();
                     
                     });
                     
@@ -65,7 +76,17 @@ var app = {
                             $('body').append(data);
                         });
                     });
-    
+
+                    this.get('/index.html', function() { 
+                        // $('body').html('');
+                        
+                        // $('#main').load('modulos/inicio.html');
+                        $('main').remove();
+                        $.get('modulos/inicio.html', function(data){
+                            $('body').append(data);
+                        });
+                    });
+
                     this.get('#/inicio', function() {
                         // $('#main').load('modulos/inicio.html');
                         $('main').remove();
@@ -105,15 +126,22 @@ var app = {
                             }); 
                         }
                         
-                        
+                    });
+
+                    this.get('#/settings', function() {
+                        // $('#main').load('modulos/inicio.html');
+                        $('body').html('');
+                        $.get('modulos/settings.html', function(data){
+                            $('body').append(data);
+                        });
                     });
             
                 });
             
                 $(function() {
-                    app.run()
+                    sammyapp.run()
                 });
-                })(jQuery);
+            })(jQuery);
             
             // $('#footer').load('modulos/footer.html');
             
@@ -122,12 +150,50 @@ var app = {
             $.get('modulos/login.html', function(data){
                 $('body').append(data);
             });
+
+            // ;(function($) {
+            //     var sammyapp = $.sammy(function() {
+            
+            //         this.get('#/settings', function() {
+            //             // $('#main').load('modulos/inicio.html');
+            //             $('body').html('');
+            //             $.get('modulos/settings.html', function(data){
+            //                 $('body').append(data);
+            //             });
+            //         });
+
+            //         // this.get('#/cerrar', function() {
+                    
+            //         //     $('body').html('');
+            //         //     $.get('modulos/login.html', function(data){
+            //         //         $('body').append(data);
+            //         //     });
+                    
+            //         // });
+
+            //         // this.get('/index.html', function() {
+                    
+            //         //     $('body').html('');
+            //         //     $.get('modulos/inicio.html', function(data){
+            //         //         $('body').append(data);
+            //         //     });
+                    
+            //         // });
+            
+            //     });
+            
+            //     $(function() {
+            //         sammyapp.run()
+            //     });
+            // })(jQuery);
         }
-
-
-        
     },
 
+    // sqliteconection: function(){
+    //     window.sqlitePlugin.echoTest(function(){
+    //        alert('conexion correcta') ;
+    //     });
+    // },
 };
 
 app.initialize();
