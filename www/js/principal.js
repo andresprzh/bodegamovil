@@ -20,6 +20,7 @@
 if (!localStorage.api_url) {
     // var api_url='http://192.168.1.54/BodegaDrogueria/api/';
     var api_url='http://192.168.0.15/BodegaDrogueria/api/';
+    localStorage.api_url=api_url;
 }else{
     var api_url=localStorage.api_url;
 }
