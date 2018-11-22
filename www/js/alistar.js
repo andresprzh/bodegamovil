@@ -279,6 +279,37 @@ var app = {
     
                             }
     
+                        },
+                        error: function (res) {
+                            if (res) {
+    
+                                swal('¡Caja cerrada exitosamente!', {
+                                    icon: 'success',
+                                }).then((event) => {
+    
+                                    // location.reload(true);
+                                    // vuelve a cargar las tablas
+                                    app.recargarItems();
+                                    var table = document.getElementById('tablavista');
+                                    var tr = table.getElementsByTagName('tr');
+                                    
+                                    if (tr.length<1) {
+                                        swal('¡Requisicion Terminada!', {
+                                            icon: 'warning',
+                                        }).then((event) => {
+                                            location.reload();
+                                        })
+                                    }
+                                    $('.tabs').tabs('select', 'TablaV');
+                                });
+    
+                            } else {
+    
+                                swal("¡Error al cerrar la caja!", {
+                                    icon: "error",
+                                });
+    
+                            }
                         }
                     });
                 }
