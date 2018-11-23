@@ -334,7 +334,7 @@ var app = {
             // alert(e.which);
             $('.validacion-input').css('display', 'none');
             $('#cantidad').css('border-bottom', '1px solid gray');
-            if (e.which == 9) {
+            if (e.which == 9 || e.which == 13) {
                 
                 app.agregarItem(); 
             }
